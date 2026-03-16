@@ -339,14 +339,16 @@ void drivercontrol(void)
 
 
 		if(R1){
+			HOOK = true;
 			HookL.open();
 			High.close();
 			if(Distance.objectDistance(mm) < 50 && !ToBeSeperate){
 				store = true;
-			}
-			if(throw_time > 100){
-				ToBeSeperate = false;
 				Mid.close();
+			}
+			if(throw_time > 240){
+				ToBeSeperate = false;
+				
 			}
 			if(!Optical.isNearObject()){
 				if(!store) {
@@ -360,10 +362,10 @@ void drivercontrol(void)
 						Mid.open();
 						ToBeSeperate = true;
 						throw_time = 0;
-						Intake(10,10,60,-100);
+						Intake(10,10,30,-100);
 				    } else {
 						if(ToBeSeperate){
-							Intake(100,100,100,-100);
+							Intake(10,10,0,-100);
 						} else {
 							Intake(100,100,100,-20);
 						}
