@@ -57,7 +57,7 @@ void Initializing()
 
 //////////////////分球///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-bool team = true;//true：红队 false：蓝队
+bool team = false;//true：红队 false：蓝队
 bool seperate = true;//设置是否开启分球
 	/////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -292,8 +292,8 @@ void drivercontrol(void)
 		BtnR = Controller.ButtonRight.pressing();
 
 		if(Optical.isNearObject()){//红球/蓝球判断条件
-			isRed = Optical.hue() < 30;//
-			isBlue = Optical.hue() > 150 && Optical.hue() < 300;//
+			isRed = Optical.hue() < 15 || Optical.hue() > 330;//
+			isBlue = Optical.hue() > 190 && Optical.hue() < 250;//
 			isUnknown = !(isRed || isBlue);
 		} else {
 			isRed = false;
