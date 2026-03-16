@@ -334,9 +334,9 @@ void drivercontrol(void)
 
 		if(R1){
 			HOOK = true;
-			Mid.close();
+			//Mid.close();
 			High.close();
-			if(Distance.objectDistance(mm) < 50 && ToBeSeperate == false){
+			if(Distance.objectDistance(mm) < 50 && ToBeSeperate == false && isSeperate == false){
 				store = true;
 			} 
 			
@@ -348,7 +348,7 @@ void drivercontrol(void)
 				}
 			} else {
 				if(!store){
-					if(isSeperate || throw_time < 100){
+					if(isSeperate || throw_time < 50){
 						
 						Mid.open();
 						Intake(100,100,100,-100);
