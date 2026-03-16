@@ -289,10 +289,16 @@ void drivercontrol(void)
 		BtnL = Controller.ButtonLeft.pressing();
 		BtnR = Controller.ButtonRight.pressing();
 
-
-		isRed = Optical.hue() < 30;
-		isBlue = Optical.hue() > 150 && Optical.hue() < 300;
-		isUnknown = !(isRed || isBlue);
+		if(Optical.isNearObject()){
+			isRed = Optical.hue() < 30;
+			isBlue = Optical.hue() > 150 && Optical.hue() < 300;
+			isUnknown = !(isRed || isBlue);
+		} else {
+			isRed = false;
+			isBlue = false;
+			isUnknown = true;
+		}
+		
 		if(seperate){
 			if(team)//team为true代表红队，红队分蓝
 			{
@@ -333,41 +339,41 @@ void drivercontrol(void)
 
 
 		if(R1){
-			HOOK = true;
-			//Mid.close();
+			HookL.open();
 			High.close();
-			if(Distance.objectDistance(mm) < 50 && ToBeSeperate == false && isSeperate == false){
+			if(Distance.objectDistance(mm) < 50 && !ToBeSeperate){
 				store = true;
-			} 
-			
+			}
+			if(throw_time > 100){
+				ToBeSeperate = false;
+				Mid.close();
+			}
 			if(!Optical.isNearObject()){
 				if(!store) {
-					Intake(100,100,100,-100);
+					Intake(100,100,100,-20);
 				} else {
 					Intake(100,100,100,0);
 				}
 			} else {
 				if(!store){
-					if(isSeperate || throw_time < 50){
-						
+					if(isSeperate){
 						Mid.open();
-						Intake(100,100,100,-100);
-					}
-					if(Distance.objectDistance(mm) < 50 && isSeperate){
-						Intake(100,100,100,-100);
 						ToBeSeperate = true;
-					} 
-					if(Distance.objectDistance(mm) > 50 && ToBeSeperate == true){
-						isSeperate = false;
-						ToBeSeperate == false;
 						throw_time = 0;
-					} 
+						Intake(10,10,60,-100);
+				    } else {
+						if(ToBeSeperate){
+							Intake(100,100,100,-100);
+						} else {
+							Intake(100,100,100,-20);
+						}
 						
-					
+					}
 				} else {
 					Intake(100,100,100,0);
 				}
 			}
+			
 			
 		
 		} else if (Ch2 > 30){
