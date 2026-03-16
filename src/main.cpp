@@ -253,9 +253,8 @@ void drivercontrol(void)
 	bool BtnU2 = false;
 	count = 0;
 	timer show_time;
-	int full_throw_time = 72;  //最大块时间
-	timer throw_time;throw_time = full_throw_time;
-	int full_throw_time2 = 100;  //最大块时间
+	  //最大块时间
+	  int full_throw_time2 = 100;  //最大块时间
 	timer throw_time2;throw_time2 = full_throw_time2;
 	timer intake_time;
 	timer time1;
@@ -265,8 +264,11 @@ void drivercontrol(void)
 	bool LockSeperate = false;
 	bool LockSeperate_Out = true;
 	//std::string currColor = "unknown", nextColor = "unknown";
-	bool isRed = Optical.hue() < 30,isBlue = Optical.hue() > 150 && Optical.hue() < 300,isUnknown = !(isRed || isBlue);
+	bool isRed = false,isBlue = false,isUnknown = !(isRed || isBlue);
 	bool isSeperate = false;
+	int full_throw_time = 235;//最大分球时间//////////////////////////////////////
+	timer throw_time;throw_time = full_throw_time;//分球时间timer
+	
 	Optical.setLightPower(100);
 	while (true) 
 	{
@@ -289,9 +291,9 @@ void drivercontrol(void)
 		BtnL = Controller.ButtonLeft.pressing();
 		BtnR = Controller.ButtonRight.pressing();
 
-		if(Optical.isNearObject()){
-			isRed = Optical.hue() < 30;
-			isBlue = Optical.hue() > 150 && Optical.hue() < 300;
+		if(Optical.isNearObject()){//红球/蓝球判断条件
+			isRed = Optical.hue() < 30;//
+			isBlue = Optical.hue() > 150 && Optical.hue() < 300;//
 			isUnknown = !(isRed || isBlue);
 		} else {
 			isRed = false;
@@ -346,7 +348,7 @@ void drivercontrol(void)
 				store = true;
 				Mid.close();
 			}
-			if(throw_time > 240){
+			if(throw_time > full_throw_time){
 				ToBeSeperate = false;
 				
 			}
