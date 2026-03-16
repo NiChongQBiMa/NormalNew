@@ -57,8 +57,8 @@ void Initializing()
 
 //////////////////分球///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-bool team = false;//true：红队 false：蓝队
-bool seperate = false;//设置是否开启分球
+bool team = true;//true：红队 false：蓝队
+bool seperate = true;//设置是否开启分球
 	/////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////
 int Auton = 4;
@@ -265,7 +265,7 @@ void drivercontrol(void)
 	bool LockSeperate = false;
 	bool LockSeperate_Out = true;
 	//std::string currColor = "unknown", nextColor = "unknown";
-	bool isRed = Optical.hue() < 30,isBlue = Optical.hue() > 200 && Optical.hue() < 300,isUnknown = !(isRed || isBlue);
+	bool isRed = Optical.hue() < 30,isBlue = Optical.hue() > 150 && Optical.hue() < 300,isUnknown = !(isRed || isBlue);
 	bool isSeperate = false;
 	Optical.setLightPower(100);
 	while (true) 
@@ -291,7 +291,7 @@ void drivercontrol(void)
 
 
 		isRed = Optical.hue() < 30;
-		isBlue = Optical.hue() > 200 && Optical.hue() < 300;
+		isBlue = Optical.hue() > 150 && Optical.hue() < 300;
 		isUnknown = !(isRed || isBlue);
 		if(seperate){
 			if(team)//team为true代表红队，红队分蓝
@@ -336,19 +336,32 @@ void drivercontrol(void)
 			HOOK = true;
 			Mid.close();
 			High.close();
-			if(Distance.objectDistance(mm) < 50){
+			if(Distance.objectDistance(mm) < 50 && ToBeSeperate == false){
 				store = true;
-			}
+			} 
+			
 			if(!Optical.isNearObject()){
 				if(!store) {
-					Intake(100,100,100,-20);
+					Intake(100,100,100,-100);
 				} else {
 					Intake(100,100,100,0);
 				}
 			} else {
 				if(!store){
-					
-						Intake(100,100,100,-20);
+					if(isSeperate || throw_time < 100){
+						
+						Mid.open();
+						Intake(100,100,100,-100);
+					}
+					if(Distance.objectDistance(mm) < 50 && isSeperate){
+						Intake(100,100,100,-100);
+						ToBeSeperate = true;
+					} 
+					if(Distance.objectDistance(mm) > 50 && ToBeSeperate == true){
+						isSeperate = false;
+						ToBeSeperate == false;
+						throw_time = 0;
+					} 
 						
 					
 				} else {
