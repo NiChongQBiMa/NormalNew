@@ -82,9 +82,9 @@ int main_RedthreadL(){
    inTake = true;
     High.close();
     //吸前三球
-    GoForWard(100,386,900,PID(0.3, 0, 0.7));//400~500pid
+    GoForWard(100,387,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,73,900,PID(0.6, 0, 0));
+    GoForWard(50,77,900,PID(0.6, 0, 0));
     Stop(brake);
     CorrectHeading(-120.5,1000,PID(1.24,0.2,3.7));
 
@@ -119,7 +119,7 @@ int main_RedthreadL(){
     //去高
     
     
-    GoForWard(100,928,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,935,2800,PID(0.27, 0, 1.0));
     Stop(brake);
         ///////////////////////////////////////////////--ttt
     CorrectHeading(-165,900,PID(1.75,0,1));
@@ -142,7 +142,7 @@ int main_RedthreadL(){
     
     inTake = true;
     IntakeArm.open();
-    GoForWard(90,280,900,PID(0.3, 0, 0.7));
+    GoForWard(90,260,900,PID(0.3, 0, 0.7));
     HookL.open();
     HookR.open();
     /*
@@ -155,7 +155,7 @@ int main_RedthreadL(){
         
     */
     //GoForWard(40,250,500,PID(0.35, 0, 0));
-    Move(27,27);
+    Move(23,23);
     throw_time = 0;
     while(1){
         if(throw_time > 600 || (OpticalDown.hue() > 200 && OpticalDown.hue() < 280)) break;//////////////////////
