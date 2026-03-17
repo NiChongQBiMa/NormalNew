@@ -86,7 +86,7 @@ int main_RedthreadL(){
     IntakeArm.open();
     GoForWard(50,70,900,PID(0.6, 0, 0));
     Stop(brake);
-    CorrectHeading(-120,1000,PID(1.2,0.2,3.7));
+    CorrectHeading(-120,1000,PID(1.24,0.2,3.7));
 
 
     Stop(brake);
@@ -95,7 +95,7 @@ int main_RedthreadL(){
     //去中
     
     inTake = false;
-    GoForWard(100,-250,700,PID(0.3, 0, 0.7));
+    GoForWard(100,-254,700,PID(0.3, 0, 0.7));
     Mid.open();
     Stop(brake);
     throw_time = 0;
@@ -120,10 +120,10 @@ int main_RedthreadL(){
     //去高
     
     
-    GoForWard(100,959,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,890,2800,PID(0.27, 0, 1.0));
     Stop(brake);
         ///////////////////////////////////////////////--ttt
-    CorrectHeading(-165,900,PID(1.75,0,1));
+    CorrectHeading(-164.7,900,PID(1.75,0,1));
     Stop(brake);
 
 
@@ -143,9 +143,8 @@ int main_RedthreadL(){
     
     inTake = true;
     IntakeArm.open();
-    GoForWard(80,250,900,PID(0.3, 0, 0.7));
-    HookL.open();
-    HookR.open();
+    GoForWard(85,256,900,PID(0.3, 0, 0.7));
+    
     /*
     if(DistanceD.objectDistance(mm) > 150){
         GoTo(50,150,400,PID(1.0,0,0));
@@ -156,10 +155,10 @@ int main_RedthreadL(){
         
     */
     //GoForWard(40,250,500,PID(0.35, 0, 0));
-    Move(23,23);
+    Move(27,27);
     throw_time = 0;
     while(1){
-        if(throw_time > 600 || (OpticalDown.hue() > 200 && OpticalDown.hue() < 280)) break;//////////////////////
+        if(throw_time > 570 || (OpticalDown.hue() > 200 && OpticalDown.hue() < 280)) break;//////////////////////
     }
     
     
@@ -185,7 +184,7 @@ int main_RedthreadL(){
         else {
             Intake(100,100,100,100);
         }
-        if(throw_time > 1000 || (Optical.hue() > 180 && Optical.hue() < 270)) break;//////////////////////
+        if(throw_time > 950 || (Optical.hue() > 180 && Optical.hue() < 270)) break;//////////////////////
     }
     Intake(0,0,0,0);
     Move(0,0);
@@ -202,9 +201,11 @@ int main_RedthreadL(){
     //钩子（淘汰赛）
     double rot = Inertial.rotation(deg);
 	CorrectHeading(rot-60,700,PID(2.5,0,0));
-    RushGo(100,60,420,PID(0.5,0,0.4));
+    HookL.open();
+    HookR.open();
+    RushGo(100,108,420,PID(0.5,0,0.4));
     Stop(brake);
-	CorrectHeading(rot-20,800,PID(1.48,0,4));
+	CorrectHeading(rot-18,500,PID(1.72,0,3.8));
     HookL.close();
     HookR.close();
 	RushGo(200,-300,600);
@@ -216,7 +217,7 @@ int main_RedthreadL(){
     High.close();
     throw_time = 0;
     while(1){
-        if(Distance.objectDistance(mm) < 30){
+        if(Optical.isNearObject()){
             Intake(-100,-100,-100,-20);
         } else {
             Intake(-100,-100,-100,100);
