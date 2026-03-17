@@ -48,12 +48,14 @@ void Initializing()
 	Brain.Screen.clearScreen();
 	//IntakeArm.open();
 }
-// solt1:红左7球
-// solt2:蓝左7球
-// solt3:红方 圈
-// solt4:红方 桩
-// solt5:淘汰赛蓝方 圈
-// solt6:淘汰赛红方 圈
+// solt1:红左
+// solt2:蓝左
+// solt3:红右
+// solt4:蓝右
+// solt5:test
+// solt6:
+// solt7:
+// solt8:skill
 
 //////////////////分球///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -253,9 +255,8 @@ void drivercontrol(void)
 	bool BtnU2 = false;
 	count = 0;
 	timer show_time;
-	int full_throw_time = 72;  //最大块时间
-	timer throw_time;throw_time = full_throw_time;
-	int full_throw_time2 = 100;  //最大块时间
+
+	int full_throw_time2 = 72;  //最大吐中时间、、
 	timer throw_time2;throw_time2 = full_throw_time2;
 	timer intake_time;
 	timer time1;
@@ -265,8 +266,11 @@ void drivercontrol(void)
 	bool LockSeperate = false;
 	bool LockSeperate_Out = true;
 	//std::string currColor = "unknown", nextColor = "unknown";
-	bool isRed = Optical.hue() < 30,isBlue = Optical.hue() > 200 && Optical.hue() < 300,isUnknown = !(isRed || isBlue);
+	bool isRed = false,isBlue = false,isUnknown = !(isRed || isBlue);
 	bool isSeperate = false;
+	int full_throw_time = 235;//最大分球时间//////////////////////////////////////
+	timer throw_time;throw_time = full_throw_time;//分球时间timer
+	
 	Optical.setLightPower(100);
 	while (true) 
 	{
@@ -289,14 +293,20 @@ void drivercontrol(void)
 		BtnL = Controller.ButtonLeft.pressing();
 		BtnR = Controller.ButtonRight.pressing();
 
-
-		isRed = Optical.hue() < 30;
-		isBlue = Optical.hue() > 200 && Optical.hue() < 300;
-		isUnknown = !(isRed || isBlue);
+		if(Optical.isNearObject()){//红球/蓝球判断条件
+			isRed = Optical.hue() < 15 || Optical.hue() > 330;//
+			isBlue = Optical.hue() > 190 && Optical.hue() < 250;//
+			isUnknown = !(isRed || isBlue);
+		} else {
+			isRed = false;
+			isBlue = false;
+			isUnknown = true;
+		}
+		
 		if(seperate){
 			if(team)//team为true代表红队，红队分蓝
 			{
-			isSeperate = isBlue;
+				isSeperate = isBlue;
 	    	}
 			else  //蓝队分红
 			{
@@ -319,10 +329,10 @@ void drivercontrol(void)
 		}
 	*/
 		else if (abs(Ch3) >0 && abs(Ch4) < 20){
-			Move((Ch3 ), (Ch3));//直行死区
+			Move((Ch3), (Ch3));//直行死区
 		}
 		else if (abs(Ch3) < 20 && abs(Ch4) > 20){
-			Move((Ch4 ), (-Ch4));//原地转死区
+			Move((Ch4), (-Ch4));//原地转死区
 		}
 		else{
 			Stop(coast);//以coast形式停止转动
@@ -332,32 +342,46 @@ void drivercontrol(void)
 
 
 
-		if(R1){
+		if(R1){//吸球，分首个球？
 			HOOK = true;
-			Mid.close();
+			HookL.open();
 			High.close();
-			if(Distance.objectDistance(mm) < 50){
-				store = true;
+			if(Distance.objectDistance(mm) < 50 && !ToBeSeperate){
+				store = true;//下球道存球状态
+				Mid.close();
+			}
+			if(throw_time > full_throw_time){
+				ToBeSeperate = false;	//fulltime后，球已分走，不再需要被分
 			}
 			if(!Optical.isNearObject()){
-				if(!store) {
+				if(!store) {//无球
 					Intake(100,100,100,-20);
-				} else {
+				} else {//存1球
 					Intake(100,100,100,0);
 				}
 			} else {
-				if(!store){
-					
-						Intake(100,100,100,-20);
+				if(!store){//无球，分首个球？
+					if(isSeperate){//上方颜色检测到需要分
+						Mid.open();
+						ToBeSeperate = true;
+						throw_time = 0;
+						Intake(10,10,30,-100);//后方球暂缓上，先从中口分
+				    } else {
+						if(ToBeSeperate){//上方颜色未检测到需要分，但球仍未分走
+							Intake(10,10,0,-100);
+						} else {
+							Intake(100,100,100,-20);
+						}
 						
-					
-				} else {
+					}
+				} else {//存1球
 					Intake(100,100,100,0);
 				}
 			}
 			
+			
 		
-		} else if (Ch2 > 30){
+		} else if (Ch2 > 30){//吐高
 			Mid.close();
 			High.open();
 			store = false;
@@ -369,28 +393,28 @@ void drivercontrol(void)
 				
 			}
 	
-		} else if(Ch2 < -8){
+		} else if(Ch2 < -8){//吐中
 			High.close();
 			Mid.open();
 			Intake(0,0,0,0);
 			if(Ch2 < -110){
 				if(Distance.objectDistance(mm) < 50 && !block_out){
 					Intake(40,-30,-30,-100);
-					throw_time = 0;
-				} else if(throw_time < full_throw_time){
+					throw_time2 = 0;
+				} else if(throw_time2 < full_throw_time2){
 					Intake(40,-30,-30,-100);
-				}else {
+				} else {
 				block_out = true;
 					
 				Intake(-Ch2 * 0.5,-Ch2 * 0.5,-Ch2 * 0.5,Ch2 * 0.5);
-			}
+				}
 			
 				
 					
 			}
 			
 			
-		} else if(R2){
+		} else if(R2){//吐底
 			Mid.close();
 			High.close();
 			store = false;
@@ -401,7 +425,7 @@ void drivercontrol(void)
 			}
 			
 			
-		} else if(BtnA){
+		} else if(BtnA){//吐底-大功率
 			Mid.close();
 			High.close();
 			store = false;
@@ -418,7 +442,7 @@ void drivercontrol(void)
 			High.close();
 			Intake(0,0,0,0);
 		}
-		if(BtnB && ArmOut){
+		if(BtnB && ArmOut){//放手填板
 			ArmOut = false;
 			if(!Arm){
 				IntakeArm.open();
@@ -431,7 +455,7 @@ void drivercontrol(void)
 		} else if(!BtnB){
 			ArmOut = true;
 		}
-		if(HOOK && !L1){
+		if(HOOK && !L1){//钩子
 			HookL.open();
 			HookR.open();
 		} else {
@@ -439,97 +463,7 @@ void drivercontrol(void)
 			HookR.close();
 		}
 		
-		/*
-		//底盘
-		if (abs(Ch3) > 30 || abs(Ch4) > 30){  
-			Move(Ch3 + Ch4, Ch3 - Ch4);  //可根据摇杆值，灵敏地进行转向，直接使用即可
-		}
-		else if (abs(Ch3) < 30 || abs(Ch4) < 30){
-			Move((Ch3 + Ch4) * 0.4, (Ch3 - Ch4) * 0.4);
-		}
-		else if (BtnB || BtnX){//吐球时小功率向前顶
-			//Move(30,30);
-		}
-		else{=
-			Stop(coast);  //以coast形式停止转动
-		}
-
-		//分块判断
 		
-
-		//计数
-		if (Optical.isNearObject() && !block_out){
-			count+=1;
-		}
-		block_out = Optical.isNearObject();
-
-		//吸吐
-		if (BtnX && !BtnB)  //自己的球放入Long goal，不是自己的球从中间吐出
-		{
-			Throw.open();//顶盖放下
-			Obstruct.close();
-			extension = false;
-			BlockIntake(100);
-			ThrowOut(100,hold);//第二个参数代表分球是否超时//////////////////////////////////////////
-		}
-		else if (BtnB && !BtnX)  //自己的球放入Center goal，不是自己的球从顶部吐出
-		{
-			Throw.open();
-			Obstruct.close();
-			extension = false;
-			BlockIntake(100);  //吸球
-			ThrowOut(-100,hold);////////////////////////////////////////
-		}
-		else
-		{
-			if (R1 && !R2)
-			{
-				Throw.close();///////////////close=抬起
-				Obstruct.open();
-				extension = true;
-				BlockIntake(100);
-				SeperateThrow(100,throw_time < full_throw_time);  //存球时候分球
-			}
-			else if (R2 && !R1)
-			{
-				//Obstruct.close();
-				ThrowOut(0,hold);////////////////////////////////////////////////////
-				BlockIntake(-100);
-				if(L1&&!L2){
-					Obstruct.open();
-				}
-				else if(L2&&!L1){
-					Obstruct.close();
-				}
-			}
-			else
-			{
-				ThrowOut(0,hold);/////////////////////////////////////////////
-				BlockIntake(0);
-				if(L1&&!L2){
-					Obstruct.open();
-				}
-				else if(L2&&!L1){
-					Obstruct.close();
-				}
-			}
-		}
-
-		//手动控制拦球气动
-		if (!BtnX && !BtnB && !R1){
-			if (!BtnU2 && BtnU){
-				if (extension){
-					Obstruct.close();
-				}
-				else{
-					Obstruct.open();
-				}
-				extension = !extension;
-			}
-		}
-		BtnU2 = BtnU;
-	}//while
-	*/
 	}
 }
 
