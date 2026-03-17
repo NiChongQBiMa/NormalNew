@@ -88,16 +88,16 @@ int main_RedthreadL(){
    inTake = true;
     High.close();
     //吸前三球
-    GoForWard(100,386,900,PID(0.3, 0, 0.7));//400~500pid
+    GoForWard(100,385,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,73,900,PID(0.6, 0, 0));
+    GoForWard(50,70,900,PID(0.6, 0, 0));
     Stop(brake);
-    CorrectHeading(-120.5,1000,PID(1.24,0.2,3.7));
+    CorrectHeading(-117,1000,PID(1.24,0.2,3.7));
 
 
     Stop(brake);
 
-
+return 0;
 
     //去中
     

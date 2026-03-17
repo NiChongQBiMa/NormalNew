@@ -570,12 +570,12 @@ int main()
 		curR = (RightMotor1.position(deg) + RightMotor2.position(deg) + RightMotor3.position(deg)) / 3;
 		curL = (LeftMotor1.position(deg) + LeftMotor2.position(deg) + LeftMotor3.position(deg)) / 3;
 
-/*
+
 
 		print((curR + curL) / 2,1);
 		print(Inertial.rotation(),2);
 		print(DistanceD.objectDistance(mm),3);
-		*/
+		
 		task::sleep(10);
 	}
 }
