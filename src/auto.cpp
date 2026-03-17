@@ -79,12 +79,6 @@ int main_RedthreadL(){
 
 
 
-
-
-
-
-
-
    inTake = true;
     High.close();
     //吸前三球
@@ -96,7 +90,6 @@ int main_RedthreadL(){
 
 
     Stop(brake);
-
 
 
     //去中
