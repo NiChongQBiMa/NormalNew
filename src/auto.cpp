@@ -528,8 +528,7 @@ int main_RedthreadR(){
     wait(200,msec);
     GoForWard(40,240,700,PID(0.3, 0, 0.7));
     //GoForWard(90,285,900,PID(0.3, 0, 0.7));
-    HookL.open();
-    HookR.open();
+    
     /*
     if(DistanceD.objectDistance(mm) > 150){
         GoTo(50,150,400,PID(1.0,0,0));
@@ -546,8 +545,7 @@ int main_RedthreadR(){
         if(throw_time > 750 || (OpticalDown.hue() > 200 && OpticalDown.hue() < 280)) break;//////////////////////
     }
     wait(80,msec);
-    HookL.close();
-    HookR.close();
+    
     
    //吐高
 
@@ -587,9 +585,13 @@ int main_RedthreadR(){
     //钩子（淘汰赛）
     double rot = Inertial.rotation(deg);
 	CorrectHeading(rot+60,700,PID(2.5,0,0));
-    RushGo(100,100,620,PID(0.5,0,0.4));
+    HookL.open();
+    HookR.open();
+    RushGo(100,110,620,PID(0.5,0,0.4));
     Stop(brake);
 	CorrectHeading(rot+16,800,PID(1.72,0.2,3.9));
+    HookL.close();
+    HookR.close();
 	RushGo(100,-330,600);
 	//Stop(hold);
 	Move(-60,0);
@@ -598,6 +600,18 @@ int main_RedthreadR(){
     High.close();
     //Intake(-100,-100,-100,0);
     //wait(2000,msec);
+    Intake(0,0,0,0);
+    throw_time = 0;
+    while(1){
+        if(Optical.isNearObject()){
+            Intake(-100,-100,-100,-20);
+        } else {
+            Intake(-100,-100,-100,100);
+        }
+        if(throw_time > 2000){
+            break;
+        }
+    }
     Intake(0,0,0,0);
 
    
