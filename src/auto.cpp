@@ -269,7 +269,7 @@ int main_BluethreadL(){
     //吸前三球
     GoForWard(100,384,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,76,900,PID(0.6, 0, 0));
+    GoForWard(50,82,900,PID(0.6, 0, 0));
     Stop(brake);
     CorrectHeading(-120,1000,PID(1.24,0.2,3.7));
 
@@ -280,7 +280,7 @@ int main_BluethreadL(){
     //去中
     
     inTake = false;
-    GoForWard(100,-260,700,PID(0.3, 0, 0.7));
+    GoForWard(100,-263,700,PID(0.3, 0, 0.7));
     Mid.open();
     Stop(brake);
     throw_time = 0;
@@ -291,7 +291,7 @@ int main_BluethreadL(){
             throw_out = true;
         }
         Intake(100,100,100,-100);
-        if(throw_time > 1300 || cnt >= 4) break;
+        if(throw_time > 1200 || cnt >= 4) break;
     }
 
 
@@ -305,7 +305,7 @@ int main_BluethreadL(){
     //去高
     
     
-    GoForWard(100,897,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,903,2800,PID(0.27, 0, 1.0));
     Stop(brake);
         ///////////////////////////////////////////////--ttt
     CorrectHeading(-164.3,900,PID(1.75,0,1));
@@ -328,7 +328,7 @@ int main_BluethreadL(){
     
     inTake = true;
     IntakeArm.open();
-    GoForWard(85,256,900,PID(0.3, 0, 0.7));
+    GoForWard(85,263,900,PID(0.3, 0, 0.7));
     
     /*
     if(DistanceD.objectDistance(mm) > 150){
@@ -340,7 +340,7 @@ int main_BluethreadL(){
         
     */
     //GoForWard(40,250,500,PID(0.35, 0, 0));
-    Move(27,27);
+    Move(26,26);
     throw_time = 0;
     while(1){
         if(throw_time > 570 || (OpticalDown.hue() < 20 || OpticalDown.hue() > 330)) break;//////////////////////
@@ -388,12 +388,12 @@ int main_BluethreadL(){
 	CorrectHeading(rot-60,700,PID(2.5,0,0));
     HookL.open();
     HookR.open();
-    RushGo(100,115,420,PID(0.5,0,0.4));
+    RushGo(100,117,420,PID(0.5,0,0.4));
     Stop(brake);
-	CorrectHeading(rot-18,500,PID(1.72,0,3.8));
+	CorrectHeading(rot-17,500,PID(1.72,0,3.8));
     HookL.close();
     HookR.close();
-	RushGo(200,-300,600);
+	RushGo(200,-330,600);
 	//Stop(hold);
 	Move(0,-60);
     
