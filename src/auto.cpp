@@ -267,9 +267,9 @@ int main_BluethreadL(){
    inTake = true;
     High.close();
     //吸前三球
-    GoForWard(100,385,900,PID(0.3, 0, 0.7));//400~500pid
+    GoForWard(100,384,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,90,900,PID(0.6, 0, 0));
+    GoForWard(50,76,900,PID(0.6, 0, 0));
     Stop(brake);
     CorrectHeading(-120,1000,PID(1.24,0.2,3.7));
 
@@ -280,7 +280,7 @@ int main_BluethreadL(){
     //去中
     
     inTake = false;
-    GoForWard(100,-256,700,PID(0.3, 0, 0.7));
+    GoForWard(100,-260,700,PID(0.3, 0, 0.7));
     Mid.open();
     Stop(brake);
     throw_time = 0;
@@ -305,7 +305,7 @@ int main_BluethreadL(){
     //去高
     
     
-    GoForWard(100,898,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,897,2800,PID(0.27, 0, 1.0));
     Stop(brake);
         ///////////////////////////////////////////////--ttt
     CorrectHeading(-164.3,900,PID(1.75,0,1));
