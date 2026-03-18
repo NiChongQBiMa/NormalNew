@@ -777,11 +777,11 @@ int main_BluethreadR(){
     Intake(100,100,0,0);
     High.close();
     //吸前三球
-    GoForWard(100,387,900,PID(0.3, 0, 0.7));//400~500pid
+    GoForWard(100,384,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,70,900,PID(0.6, 0, 0));
+    GoForWard(50,75,900,PID(0.6, 0, 0));
     Stop(brake);
-    CorrectHeading(-57.2,900,PID(1.73,0.2,3.9));
+    CorrectHeading(-57,900,PID(1.73,0.2,3.9));
 
 // CorrectHeading(-57,900,PID(1.72,0.2,3.9));//不放板子
     Stop(brake);
@@ -819,7 +819,7 @@ int main_BluethreadR(){
 
     
     /////////////////////////////////////////////////
-    CorrectHeading(-192.7,1000,PID(1.23,0,3.2));
+    CorrectHeading(-192,1000,PID(1.23,0,3.2));
 
     Stop(brake);
     
@@ -831,10 +831,9 @@ int main_BluethreadR(){
     inTake = true;
     IntakeArm.open();
     wait(200,msec);
-    GoForWard(45,240,700,PID(0.3, 0, 0.7));
+    GoForWard(80,235,700,PID(0.3, 0, 0.7));
     //GoForWard(90,285,900,PID(0.3, 0, 0.7));
-    HookL.open();
-    HookR.open();
+    
     /*
     if(DistanceD.objectDistance(mm) > 150){
         GoTo(50,150,400,PID(1.0,0,0));
@@ -845,18 +844,19 @@ int main_BluethreadR(){
         
     */
     //GoForWard(40,250,500,PID(0.35, 0, 0));
-    Move(20,20);
+    Move(27,27);
     throw_time = 0;
     while(1){
         if(throw_time > 650) break;//////////////////////
     }
     wait(80,msec);
-    HookL.close();
-    HookR.close();
+    Move(-27,-27);
+    wait(200,msec);
+    
     
    //吐高
 
-    GoForWard(100,-540,900,PID(0.3, 0, 0.7));
+    GoForWard(100,-520,900,PID(0.3, 0, 0.7));
     inTake = false;
     Intake(0,0,0,0);
     High.open();
@@ -892,16 +892,31 @@ int main_BluethreadR(){
     //钩子（淘汰赛）
     double rot = Inertial.rotation(deg);
 	CorrectHeading(rot+60,700,PID(2.5,0,0));
-    RushGo(100,110,620,PID(0.5,0,0.4));
+    RushGo(100,106,620,PID(0.5,0,0.4));
+    HookL.open();
+    HookR.open();
     Stop(brake);
 	CorrectHeading(rot+14,800,PID(1.72,0.2,3.9));
+    HookL.close();
+    HookR.close();
 	RushGo(100,-330,600);
 	//Stop(hold);
 	Move(-60,0);
 	wait(200,msec);
 	Stop(hold);
     High.close();
-
+    throw_time = 0;
+    while(1){
+        if(Optical.isNearObject()){
+            Intake(-100,-100,-100,-20);
+        } else {
+            Intake(-100,-100,-100,100);
+        }
+        if(throw_time > 2000){
+            break;
+        }
+    }
+    Intake(0,0,0,0);
 
    
     return 7258;
