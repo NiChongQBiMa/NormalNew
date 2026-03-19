@@ -84,9 +84,9 @@ int main_RedthreadL(){
     //吸前三球
     GoForWard(100,382,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,70,900,PID(0.6, 0, 0));
+    GoForWard(50,73,900,PID(0.6, 0, 0));
     Stop(brake);
-    CorrectHeading(-120,1000,PID(1.24,0.2,3.7));
+    CorrectHeading(-120.2,1000,PID(1.24,0.2,3.7));
 
 
     Stop(brake);
@@ -120,10 +120,10 @@ int main_RedthreadL(){
     //去高
     
     
-    GoForWard(100,890,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,853,2800,PID(0.27, 0, 1.0));
     Stop(brake);
         ///////////////////////////////////////////////--ttt
-    CorrectHeading(-164.7,900,PID(1.75,0,1));
+    CorrectHeading(-165,900,PID(1.75,0,1));
     Stop(brake);
 
 
@@ -143,7 +143,7 @@ int main_RedthreadL(){
     
     inTake = true;
     IntakeArm.open();
-    GoForWard(85,256,900,PID(0.3, 0, 0.7));
+    GoForWard(85,265,900,PID(0.3, 0, 0.7));
     
     /*
     if(DistanceD.objectDistance(mm) > 150){
@@ -203,9 +203,9 @@ int main_RedthreadL(){
 	CorrectHeading(rot-60,700,PID(2.5,0,0));
     HookL.open();
     HookR.open();
-    RushGo(100,108,420,PID(0.5,0,0.4));
+    RushGo(100,115,420,PID(0.5,0,0.4));
     Stop(brake);
-	CorrectHeading(rot-18,500,PID(1.72,0,3.8));
+	CorrectHeading(rot-17,500,PID(1.72,0,3.8));
     HookL.close();
     HookR.close();
 	RushGo(200,-300,600);
@@ -507,7 +507,7 @@ int main_RedthreadR(){
     //去高
     
     
-    GoForWard(100,-908,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,-911,2800,PID(0.27, 0, 1.0));
     Stop(brake);
     
     Mid.close();
@@ -526,7 +526,7 @@ int main_RedthreadR(){
     inTake = true;
     IntakeArm.open();
     wait(200,msec);
-    GoForWard(40,240,700,PID(0.3, 0, 0.7));
+    GoForWard(85,235,700,PID(0.3, 0, 0.7));
     //GoForWard(90,285,900,PID(0.3, 0, 0.7));
     
     /*
@@ -539,7 +539,7 @@ int main_RedthreadR(){
         
     */
     //GoForWard(40,250,500,PID(0.35, 0, 0));
-    Move(20,20);
+    Move(27,27);
     throw_time = 0;
     while(1){
         if(throw_time > 750 || (OpticalDown.hue() > 200 && OpticalDown.hue() < 280)) break;//////////////////////
@@ -587,9 +587,9 @@ int main_RedthreadR(){
 	CorrectHeading(rot+60,700,PID(2.5,0,0));
     HookL.open();
     HookR.open();
-    RushGo(100,110,620,PID(0.5,0,0.4));
+    RushGo(100,112,620,PID(0.5,0,0.4));
     Stop(brake);
-	CorrectHeading(rot+16,800,PID(1.72,0.2,3.9));
+	CorrectHeading(rot+15,800,PID(1.72,0.2,3.9));
     HookL.close();
     HookR.close();
 	RushGo(100,-330,600);
@@ -845,7 +845,7 @@ int main_BluethreadR(){
     inTake = true;
     IntakeArm.open();
     wait(200,msec);
-    GoForWard(80,235,700,PID(0.3, 0, 0.7));
+    GoForWard(60,226,700,PID(0.3, 0, 0.7));
     //GoForWard(90,285,900,PID(0.3, 0, 0.7));
     
     /*
