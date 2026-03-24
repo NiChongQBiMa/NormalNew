@@ -350,27 +350,45 @@ void drivercontrol(void)
 			HOOK = true;
 			HookL.open();
 			High.close();
-			Intakec(100);
 			if(IsSeperate(OpticalDown,team)){
-				Door.open();
 				TobeSeperate = true;
 				IsSeperate_Down = false;
 				Intakea(15);
-				Intakeb(30);
-			} else if(!ToBeSeperate){
-				Intakea(100);
-				Intakeb(100);
+				Intakeb(20);
 			}
 			if(IsSeperate(OpticalSep,team)){
 				TobeSeperate = true;
 				IsSeperate_Down = false;
 				Intakea(7);
-				Intakeb(30);
-			}
-			if(DistanceSep.objectDistance(mm) < 60){
+				Intakeb(20);
+			} 
+			if(DistanceSep.objectDistance(mm) < 50){
 				IsSeperate_Down = true;
 			}
-			if(IsSeperate_Down){
+			if((!IsSeperate(OpticalDown,team) && !IsSeperate(OpticalSep,team)) || IsSeperate(OpticalSep,!team)){
+				TobeSeperate = false;
+			}
+
+			if(!TobeSeperate) {
+				Intakea(100);
+				Intakeb(100);
+			}
+			if(Distance.objectDistance(mm) < 50){
+				store = true;//下球道存球状态
+				Mid.close();
+			}
+			if(!store) {//无球
+				Intakec(100);
+				ThrowOut(-20,hold);
+			} else {//存1球
+				Intakec(100);
+				ThrowOut(0,hold);
+			}
+			
+			if(TobeSeperate){
+				Door.open();
+			}
+			if(IsSeperate_Down && !TobeSeperate){
 				Door.close();
 			}
 
