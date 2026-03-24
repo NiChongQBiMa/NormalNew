@@ -35,8 +35,12 @@ distance DistanceC(PORT4);
 
 optical Optical(PORT10);
 optical OpticalDown(PORT14);
+optical OpticalSep(PORT18);//Optical for Seperate
+
+distance DistanceSep(PORT19);//DIstance for Seperate
 distance Distance(PORT9);
 distance DistanceD(PORT8);
+
 
 pneumatics High(Brain.ThreeWirePort.A);
 pneumatics Throw(Brain.ThreeWirePort.E);
@@ -44,5 +48,6 @@ pneumatics IntakeArm(Brain.ThreeWirePort.G);
 pneumatics HookL(Brain.ThreeWirePort.C);
 pneumatics HookR(Brain.ThreeWirePort.B);
 pneumatics Mid(Brain.ThreeWirePort.H);
+pneumatics Door(Brain.ThreeWirePort.F);
 
 void Show(){}

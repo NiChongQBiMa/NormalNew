@@ -40,11 +40,12 @@ extern distance Distanceup;
 extern distance Distance;
 extern distance DistanceC;
 extern distance DistanceD;
-
+extern distance DistanceSep;
 
 extern optical OpticalDown;
 extern optical Optical;
 extern optical Optical2;
+extern optical OpticalSep;
 extern gyro Gyro;
 extern triport TriportA;
 
@@ -59,7 +60,7 @@ extern pneumatics HookL;
 extern pneumatics HookR;
 extern pneumatics Mid;
 extern pneumatics High;
-
+extern pneumatics Door;
 
 extern encoder EncoderL;
 extern line LineA;

@@ -59,7 +59,7 @@ void Initializing()
 
 //////////////////分球///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-bool team = false;//true：红队 false：蓝队
+bool team = true;//true：红队 false：蓝队
 bool seperate = true;//设置是否开启分球
 	/////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -262,16 +262,20 @@ void drivercontrol(void)
 	timer time1;
 	timer time2;
 	bool store = false;
-	bool ToBeSeperate = false;
+	bool ToBeSeperate = false;//upp seperate
+	bool TobeSeperate = false;//door seperate
 	bool LockSeperate = false;
 	bool LockSeperate_Out = true;
 	//std::string currColor = "unknown", nextColor = "unknown";
 	bool isRed = false,isBlue = false,isUnknown = !(isRed || isBlue);
 	bool isSeperate = false;
+	bool IsSeperate_Down = false;
 	int full_throw_time = 235;//最大分球时间//////////////////////////////////////
 	timer throw_time;throw_time = full_throw_time;//分球时间timer
 	
 	Optical.setLightPower(100);
+	OpticalDown.setLightPower(100);
+	OpticalSep.setLightPower(100);
 	while (true) 
 	{
 		wait(5,msec);
@@ -341,43 +345,36 @@ void drivercontrol(void)
 
 
 
-
-		if(R1){//吸球，分首个球？
+		
+		if(R1){//吸球，分球？
 			HOOK = true;
 			HookL.open();
 			High.close();
-			if(Distance.objectDistance(mm) < 50 && !ToBeSeperate){
-				store = true;//下球道存球状态
-				Mid.close();
+			Intakec(100);
+			if(IsSeperate(OpticalDown,team)){
+				Door.open();
+				TobeSeperate = true;
+				IsSeperate_Down = false;
+				Intakea(15);
+				Intakeb(30);
+			} else if(!ToBeSeperate){
+				Intakea(100);
+				Intakeb(100);
 			}
-			if(throw_time > full_throw_time){
-				ToBeSeperate = false;	//fulltime后，球已分走，不再需要被分
+			if(IsSeperate(OpticalSep,team)){
+				TobeSeperate = true;
+				IsSeperate_Down = false;
+				Intakea(7);
+				Intakeb(30);
 			}
-			if(!Optical.isNearObject()){
-				if(!store) {//无球
-					Intake(100,100,100,-20);
-				} else {//存1球
-					Intake(100,100,100,0);
-				}
-			} else {
-				if(!store){//无球，分首个球？
-					if(isSeperate){//上方颜色检测到需要分
-						Mid.open();
-						ToBeSeperate = true;
-						throw_time = 0;
-						Intake(10,10,30,-100);//后方球暂缓上，先从中口分
-				    } else {
-						if(ToBeSeperate){//上方颜色未检测到需要分，但球仍未分走
-							Intake(10,10,0,-100);
-						} else {
-							Intake(100,100,100,-20);
-						}
-						
-					}
-				} else {//存1球
-					Intake(100,100,100,0);
-				}
+			if(DistanceSep.objectDistance(mm) < 60){
+				IsSeperate_Down = true;
 			}
+			if(IsSeperate_Down){
+				Door.close();
+			}
+
+			
 			
 			
 		
@@ -462,7 +459,11 @@ void drivercontrol(void)
 			HookL.close();
 			HookR.close();
 		}
-		
+		if(BtnY){
+			Door.open();
+		} else if(!TobeSeperate && IsSeperate_Down){
+			Door.close();
+		}
 		
 	}
 }
