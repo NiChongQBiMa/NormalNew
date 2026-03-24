@@ -114,3 +114,4 @@ void Intakea(float powera);
 void Intakeb(float powerb);
 void Intakec(float powerc);
 void ThrowOut(float Power, brakeType type);
+bool IsSeperate(optical Opt,bool team);

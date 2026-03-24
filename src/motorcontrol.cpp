@@ -448,6 +448,24 @@ void Intake(float Powera,float Powerb,float Powerc,float Powerd){
 
 
 
+bool IsSeperate(optical Opt,bool team){
+	bool isRed = false,isBlue = false,isUnknown = false,isSeperate = false;
+	if(Opt.isNearObject()){//红球/蓝球判断条件
+		isRed = Opt.hue() < 15 || Opt.hue() > 330;//
+		isBlue = Opt.hue() > 190 && Opt.hue() < 250;//
+		isUnknown = !(isRed || isBlue);
+	} else {
+		isRed = false;
+		isBlue = false;
+		isUnknown = true;
+	}
+	
+	if(team)isSeperate = isBlue;//team为true代表红队，红队分蓝
+	else  isSeperate = isRed;//蓝队分红
+	return isSeperate;
+}
+
+
 
 
 /*
