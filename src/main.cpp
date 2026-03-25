@@ -353,14 +353,15 @@ void drivercontrol(void)
 			if((!IsSeperate(OpticalDown,team) && !IsSeperate(OpticalSep,team))){
 				TobeSeperate = false;
 			}
+			if(IsSeperate(OpticalSep,team) && !TobeSeperate) throw_time = 0;
 			if(IsSeperate(OpticalDown,team)){
 				TobeSeperate = true;
 				//IsSeperate_Down = false;
-				Intakea(8);
-				Intakeb(8);
+				Intakea(10);
+				Intakeb(10);
 			}
 			if(IsSeperate(OpticalSep,team)){
-				if(!IsSeperate_Down) throw_time = 0;
+				//if(!TobeSeperate) throw_time = 0;
 				TobeSeperate = true;
 				IsSeperate_Down = false;
 				Intakea(0);
