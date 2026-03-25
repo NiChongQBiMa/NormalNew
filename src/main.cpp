@@ -350,26 +350,40 @@ void drivercontrol(void)
 			HOOK = true;
 			HookL.open();
 			High.close();
-			if(IsSeperate(OpticalDown,team)){
-				TobeSeperate = true;
-				IsSeperate_Down = false;
-				Intakea(15);
-				Intakeb(20);
-			}
-			if(IsSeperate(OpticalSep,team)){
-				TobeSeperate = true;
-				IsSeperate_Down = false;
-				Intakea(7);
-				Intakeb(20);
-			} 
-			if(DistanceSep.objectDistance(mm) < 50){
-				IsSeperate_Down = true;
-			}
-			if((!IsSeperate(OpticalDown,team) && !IsSeperate(OpticalSep,team)) || IsSeperate(OpticalSep,!team)){
+			if((!IsSeperate(OpticalDown,team) && !IsSeperate(OpticalSep,team))){
 				TobeSeperate = false;
 			}
+			if(IsSeperate(OpticalDown,team)){
+				//TobeSeperate = true;
+				//IsSeperate_Down = false;
+				Intakea(10);
+				Intakeb(10);
+			}
+			if(IsSeperate(OpticalSep,team)){
+				if(!TobeSeperate) throw_time = 0;
+				TobeSeperate = true;
+				IsSeperate_Down = false;
+				Intakea(0);
+				Intakeb(0);
+				
+			} 
+			if(TobeSeperate){
+				Door.open();
+			}
+			if(IsSeperate_Down && !TobeSeperate){
+				Door.close();
+			}
+			
+			if(IsSeperate(OpticalSep,team) && throw_time > 400){
+				Intakeb(40);
+			}
+			
+			if(DistanceSep.objectDistance(mm) < 40){
+				IsSeperate_Down = true;
+			}
+			
 
-			if(!TobeSeperate) {
+			if(!TobeSeperate && throw_time > 400) {
 				Intakea(100);
 				Intakeb(100);
 			}
@@ -385,12 +399,8 @@ void drivercontrol(void)
 				ThrowOut(0,hold);
 			}
 			
-			if(TobeSeperate){
-				Door.open();
-			}
-			if(IsSeperate_Down && !TobeSeperate){
-				Door.close();
-			}
+			
+			
 
 			
 			
