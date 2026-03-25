@@ -354,13 +354,13 @@ void drivercontrol(void)
 				TobeSeperate = false;
 			}
 			if(IsSeperate(OpticalDown,team)){
-				//TobeSeperate = true;
+				TobeSeperate = true;
 				//IsSeperate_Down = false;
-				Intakea(10);
-				Intakeb(10);
+				Intakea(8);
+				Intakeb(8);
 			}
 			if(IsSeperate(OpticalSep,team)){
-				if(!TobeSeperate) throw_time = 0;
+				if(!IsSeperate_Down) throw_time = 0;
 				TobeSeperate = true;
 				IsSeperate_Down = false;
 				Intakea(0);
@@ -375,7 +375,8 @@ void drivercontrol(void)
 			}
 			
 			if(IsSeperate(OpticalSep,team) && throw_time > 400){
-				Intakeb(40);
+				Intakea(10);
+				Intakeb(30);
 			}
 			
 			if(DistanceSep.objectDistance(mm) < 40){
