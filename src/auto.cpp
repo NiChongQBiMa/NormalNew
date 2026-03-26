@@ -217,7 +217,7 @@ int main_RedthreadL(){
 	wait(200,msec);
 	Stop(hold);
     High.close();
-    throw_time = 0;
+    throw_time = 3000;
     while(1){
         if(Optical.isNearObject()){
             Intake(-100,-100,-100,-20);
@@ -403,7 +403,7 @@ int main_BluethreadL(){
 	wait(200,msec);
 	Stop(hold);
     High.close();
-    throw_time = 0;
+    throw_time = 3000;
     while(1){
         if(Optical.isNearObject()){
             Intake(-100,-100,-100,-20);
@@ -607,7 +607,7 @@ int main_RedthreadR(){
     //Intake(-100,-100,-100,0);
     //wait(2000,msec);
     Intake(0,0,0,0);
-    throw_time = 0;
+    throw_time = 3000;
     while(1){
         if(Optical.isNearObject()){
             Intake(-100,-100,-100,-20);
@@ -925,7 +925,7 @@ int main_BluethreadR(){
 	wait(200,msec);
 	Stop(hold);
     High.close();
-    throw_time = 0;
+    throw_time = 3000;
     while(1){
         if(Optical.isNearObject()){
             Intake(-100,-100,-100,-20);
