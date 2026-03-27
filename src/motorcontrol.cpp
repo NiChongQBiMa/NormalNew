@@ -451,7 +451,7 @@ void Intake(float Powera,float Powerb,float Powerc,float Powerd){
 bool IsSeperate(optical Opt,bool team){
 	bool isRed = false,isBlue = false,isUnknown = false,isSeperate = false;
 	if(Opt.isNearObject()){//红球/蓝球判断条件
-		isRed = Opt.hue() < 12 || Opt.hue() > 348;//
+		isRed = Opt.hue() < 19 || Opt.hue() > 345;//
 		isBlue = Opt.hue() > 200 && Opt.hue() < 233;//
 		isUnknown = !(isRed || isBlue);
 	} else {
