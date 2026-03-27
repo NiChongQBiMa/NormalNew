@@ -799,7 +799,7 @@ int main_BluethreadR(){
     //吸前三球
     GoForWard(100,384,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,75,900,PID(0.6, 0, 0));
+    GoForWard(50,82,900,PID(0.6, 0, 0));
     Stop(brake);
     CorrectHeading(-57,900,PID(1.73,0.2,3.9));
 
@@ -832,7 +832,7 @@ int main_BluethreadR(){
     //去高
     
     
-    GoForWard(100,-914,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,-911,2800,PID(0.27, 0, 1.0));
     Stop(brake);
     
     Mid.close();
