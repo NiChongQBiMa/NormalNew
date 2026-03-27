@@ -11,16 +11,16 @@ using namespace vex;
 int cnt = 0;
 bool BallOut = false,BallNear = true;;
 bool inTake = false;
-bool store = false;
+bool storea = false;
 bool RED_TEAM = true,BLUE_TEAM = false;
 int intake_task_func(){
     while(true){
         while(inTake){
-            if(store){
+            if(storea){
                 Intake(100,100,100,0);
             } else {
                 if(Distance.objectDistance(mm) < 60){
-                    store = true;
+                    storea = true;
                 }
                 Intake(100,100,100,-13);
             }
@@ -174,7 +174,7 @@ int main_RedthreadL(){
     Move(-100,-100);
     wait(50,msec);
     IntakeArm.close();
-    store = false;
+    storea = false;
     
     throw_time = 0;
 
@@ -360,7 +360,7 @@ int main_BluethreadL(){
     Move(-100,-100);
     wait(50,msec);
     IntakeArm.close();
-    store = false;
+    storea = false;
     
     throw_time = 0;
 
@@ -560,7 +560,7 @@ int main_RedthreadR(){
     Move(-100,-100);
     wait(150,msec);
     IntakeArm.close();
-    store = false;
+    storea = false;
     
     throw_time = 0;
 
@@ -738,7 +738,7 @@ int main_RedthreadR_0plus7(){
     Move(-50,-50);
     wait(180,msec);
     IntakeArm.close();
-    store = false;
+    storea = false;
     
     throw_time = 0;
 	while(1){	
@@ -832,7 +832,7 @@ int main_BluethreadR(){
     //去高
     
     
-    GoForWard(100,-916,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,-914,2800,PID(0.27, 0, 1.0));
     Stop(brake);
     
     Mid.close();
@@ -870,7 +870,7 @@ int main_BluethreadR(){
         if(throw_time > 650) break;//////////////////////
     }
     wait(80,msec);
-    Move(-27,-27);
+    Move(-20,-20);
     wait(200,msec);
     
     
@@ -883,7 +883,7 @@ int main_BluethreadR(){
     Move(-100,-100);
     wait(150,msec);
     IntakeArm.close();
-    store = false;
+    storea = false;
     
     throw_time = 0;
 
