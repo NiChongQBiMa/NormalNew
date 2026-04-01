@@ -115,3 +115,4 @@ void Intakeb(float powerb);
 void Intakec(float powerc);
 void ThrowOut(float Power, brakeType type);
 bool IsSeperate(optical Opt,bool team);
+void CorrectHeading_OneSide(float Target, float FullTime, PID pid);

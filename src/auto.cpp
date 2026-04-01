@@ -17,12 +17,12 @@ int intake_task_func(){
     while(true){
         while(inTake){
             if(storea){
-                Intake(100,100,100,0);
+                Intake(100,100,100,15);
             } else {
                 if(Distance.objectDistance(mm) < 60){
                     storea = true;
                 }
-                Intake(100,100,100,-13);
+                Intake(100,100,100,15);
             }
 			}
         wait(10,msec);
@@ -144,7 +144,7 @@ int main_RedthreadL(){
     
     inTake = true;
     IntakeArm.open();
-    GoForWard(85,273,900,PID(0.3, 0, 0.7));
+    GoForWard(85,283,900,PID(0.3, 0, 0.7));
     
     /*
     if(DistanceD.objectDistance(mm) > 150){
@@ -166,7 +166,7 @@ int main_RedthreadL(){
    //吐高
    Move(-20,-20);
    wait(230,msec);
-   High.open();
+
     GoForWard(90,-540,900,PID(0.3, 0, 0.7));
     inTake = false;
     Intake(0,0,0,0);
@@ -352,7 +352,7 @@ int main_BluethreadL(){
    //吐高
     Move(-20,-20);
     wait(230,msec);
-    High.open();
+
     GoForWard(90,-540,900,PID(0.3, 0, 0.7));
     inTake = false;
     Intake(0,0,0,0);
@@ -510,7 +510,7 @@ int main_RedthreadR(){
     //去高
     
     
-    GoForWard(100,-897,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,-900,2800,PID(0.27, 0, 1.0));
     Stop(brake);
     
     Mid.close();
@@ -529,7 +529,7 @@ int main_RedthreadR(){
     inTake = true;
     IntakeArm.open();
     wait(200,msec);
-    GoForWard(85,235,700,PID(0.3, 0, 0.7));
+    GoForWard(85,245,700,PID(0.3, 0, 0.7));
     //GoForWard(90,285,900,PID(0.3, 0, 0.7));
     
     /*
@@ -545,14 +545,14 @@ int main_RedthreadR(){
     Move(26,26);
     throw_time = 0;
     while(1){
-        if(throw_time > 540 || IsSeperate(OpticalDown,RED_TEAM)) break;//////////////////////
+        if(throw_time > 500 || IsSeperate(OpticalDown,RED_TEAM)) break;//////////////////////
     }
     wait(80,msec);
     
     
    //吐高
-    
-    High.open();
+    HookL.open();
+    HookR.open();
     GoForWard(100,-550,900,PID(0.3, 0, 0.7));
     inTake = false;
     Intake(0,0,0,0);
@@ -561,7 +561,8 @@ int main_RedthreadR(){
     wait(150,msec);
     IntakeArm.close();
     storea = false;
-    
+    HookL.close();
+    HookR.close();
     throw_time = 0;
 
 	while(1){	
@@ -589,16 +590,15 @@ int main_RedthreadR(){
 
     //钩子（淘汰赛）
     double rot = Inertial.rotation(deg);
-	CorrectHeading(rot+60,700,PID(2.5,0,0));
-    HookL.open();
-    HookR.open();
-    RushGo(100,112,620,PID(0.5,0,0.4));
-    Stop(brake);
-    High.close();
-	CorrectHeading(rot+15,800,PID(1.72,0.2,3.9));
-    HookL.close();
-    HookR.close();
-	RushGo(100,-330,600);
+	CorrectHeading(rot+60,900,PID(2.9,0,0));
+    //Stop(brake);
+   
+    RushGo(100,107,620,PID(0.5,0,0.4));
+    
+   // Stop(brake);
+	CorrectHeading(rot+14,800,PID(1.72,0,3.9));
+    //
+	RushGo(100,-360,800);
 	//Stop(hold);
 	Move(-60,0);
 	wait(200,msec);
@@ -786,6 +786,13 @@ void Auto_Redright_0plus7(){
 
 
 int main_BluethreadR(){
+    
+
+
+
+
+
+
     timer throw_time;
     //RushGo(100,100,620,PID(0.5,0,0.4));
 	//CorrectHeading(60,800,PID(2.5,0,0));
@@ -799,7 +806,7 @@ int main_BluethreadR(){
     //吸前三球
     GoForWard(100,384,900,PID(0.3, 0, 0.7));//400~500pid
     IntakeArm.open();
-    GoForWard(50,82,900,PID(0.6, 0, 0));
+    GoForWard(50,83,900,PID(0.6, 0, 0));
     Stop(brake);
     CorrectHeading(-57,900,PID(1.73,0.2,3.9));
 
@@ -832,7 +839,7 @@ int main_BluethreadR(){
     //去高
     
     
-    GoForWard(100,-911,2800,PID(0.27, 0, 1.0));
+    GoForWard(100,-901,2800,PID(0.27, 0, 1.0));
     Stop(brake);
     
     Mid.close();
@@ -851,7 +858,7 @@ int main_BluethreadR(){
     inTake = true;
     IntakeArm.open();
     wait(200,msec);
-    GoForWard(60,226,700,PID(0.3, 0, 0.7));
+    GoForWard(85,235,700,PID(0.3, 0, 0.7));
     //GoForWard(90,285,900,PID(0.3, 0, 0.7));
     
     /*
@@ -867,17 +874,21 @@ int main_BluethreadR(){
     Move(27,27);
     throw_time = 0;
     while(1){
-        if(throw_time > 650) break;//////////////////////
+        if(throw_time > 440) break;//////////////////////
     }
-    wait(80,msec);
+    wait(40,msec);
     Move(-20,-20);
-    wait(200,msec);
+    wait(200,msec);                                        
     
     
    //吐高
-    High.open();
+
+    HookL.open();
+    HookR.open();
     GoForWard(100,-520,900,PID(0.3, 0, 0.7));
     inTake = false;
+    HookL.close();
+    HookR.close();
     Intake(0,0,0,0);
     High.open();
     Move(-100,-100);
@@ -895,7 +906,7 @@ int main_BluethreadR(){
         else {
             Intake(100,100,100,100);
         }
-        if(throw_time > 800 || IsSeperate(Optical,BLUE_TEAM)) break;//////////////////////
+        if(throw_time > 700 || IsSeperate(Optical,BLUE_TEAM)) break;//////////////////////
     }
     Intake(0,0,0,0);
     Move(0,0);
@@ -911,15 +922,13 @@ int main_BluethreadR(){
 
     //钩子（淘汰赛）
     double rot = Inertial.rotation(deg);
-	CorrectHeading(rot+60,700,PID(2.5,0,0));
-    RushGo(100,106,620,PID(0.5,0,0.4));
-    HookL.open();
-    HookR.open();
-    Stop(brake);
-	CorrectHeading(rot+14,800,PID(1.72,0.2,3.9));
-    HookL.close();
-    HookR.close();
-	RushGo(100,-330,600);
+	CorrectHeading(rot+60,800,PID(2.9,0,0));
+    RushGo(100,103,620,PID(0.5,0,0.4));
+    
+  
+	CorrectHeading(rot+14,800,PID(1.73,0.2,3.9));
+    
+	RushGo(100,-350,600);
 	//Stop(hold);
 	Move(-60,0);
 	wait(200,msec);

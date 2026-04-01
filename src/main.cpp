@@ -308,7 +308,7 @@ void drivercontrol(void)
 	bool BtnU2 = false;
 	timer show_time;
 
-	int full_throw_time2 = 72;  //最大吐中时间、、
+	int full_throw_time2 = 325;  //最大吐中时间、、
 	timer throw_time2;throw_time2 = full_throw_time2;
 	timer intake_time;
 	timer time1;
@@ -321,7 +321,7 @@ void drivercontrol(void)
 	
 	Optical.setLightPower(100);
 	OpticalDown.setLightPower(100);
-	OpticalSep.setLightPower(100);
+	OpticalSep.setLightPower(50);
 	while (true) 
 	{
 		wait(5,msec);
@@ -405,10 +405,10 @@ void drivercontrol(void)
 			}
 			if(!store) {//无球
 				Intakec(100);
-				ThrowOut(-20,hold);
+				ThrowOut(15,hold);
 			} else {//存1球
 				Intakec(100);
-				ThrowOut(0,hold);
+				ThrowOut(15,hold);
 			}
 			
 			
@@ -430,20 +430,21 @@ void drivercontrol(void)
 				
 			}
 	
-		} else if(Ch2 < -8){//吐中
+		} else if(Ch2 < -7){//吐中
+			
 			High.close();
 			Mid.open();
 			Intake(0,0,0,0);
+			if(Ch2 < -7 && Ch2 >-110){
+				throw_time2 = 0;
+			}
 			if(Ch2 < -110){
-				if(Distance.objectDistance(mm) < 50 && !block_out){
-					Intake(40,-30,-30,-100);
-					throw_time2 = 0;
-				} else if(throw_time2 < full_throw_time2){
-					Intake(40,-30,-30,-100);
+				
+				if(throw_time2 < full_throw_time2){
+					Intake(30,-30,-40,-100);
 				} else {
-				block_out = true;
-					
-				Intake(-Ch2 * 0.5,-Ch2 * 0.5,-Ch2 * 0.5,Ch2 * 0.5);
+					block_out = true;
+					Intake(-Ch2 * 0.5,-Ch2 * 0.5,-Ch2 * 0.5,Ch2 * 0.5);
 				}
 			
 				

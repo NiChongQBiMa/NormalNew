@@ -229,6 +229,55 @@ void CorrectHeading(float Target, float FullTime, PID pid)
 	}
 	Stop(coast);
 }
+void CorrectHeading_OneSide(float Target, float FullTime, PID pid)
+{
+	float cur = 0;
+	float err = 0;
+	float Lasterr = 0;
+	float accerr = 0;
+	float out = 0;
+	timer time;
+	while (time < FullTime)
+	{
+        // 更新误差
+		cur = Inertial.rotation();
+		err = Target - cur;
+
+        // 分段积分
+		if (fabs(err) < 10)
+		{
+			accerr += err;
+		}
+
+        // 计算输出功率
+		out = pid.OUT(err, Lasterr, accerr);
+		//out = out *  (time < 100 ? (time / 100.0) : 1);
+		if(err > 0){
+			Move(out, 0);
+		
+			RightMotor1.stop(hold);
+			RightMotor2.stop(hold);
+			RightMotor3.stop(hold);
+		} else {
+			Move(0, out);
+			LeftMotor1.stop(hold);
+			LeftMotor2.stop(hold);
+			LeftMotor3.stop(hold);
+		}
+		
+
+        // 退出条件
+		if (fabs(err) < 1)
+		{
+			break;
+		}
+
+        // 更新
+		Lasterr = err;
+		wait(10,msec);
+	}
+	Stop(coast);
+}
 
 
 
@@ -452,7 +501,7 @@ bool IsSeperate(optical Opt,bool team){
 	bool isRed = false,isBlue = false,isUnknown = false,isSeperate = false;
 	if(Opt.isNearObject()){//红球/蓝球判断条件
 		isRed = Opt.hue() < 19 || Opt.hue() > 345;//
-		isBlue = Opt.hue() > 200 && Opt.hue() < 233;//
+		isBlue = Opt.hue() > 205 && Opt.hue() < 228;//
 		isUnknown = !(isRed || isBlue);
 	} else {
 		isRed = false;
