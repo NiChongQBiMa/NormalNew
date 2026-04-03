@@ -59,11 +59,11 @@ void Initializing()
 
 //////////////////分球///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-bool team = false;//true：红队 false：蓝队
+bool team = true;//true：红队 false：蓝队
 bool seperate = true;//设置是否开启分球
 	//////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////
-int Auton = 4;
+int Auton = 3;
 /// //////////////////////////////
 
 void runauto()
@@ -405,10 +405,10 @@ void drivercontrol(void)
 			}
 			if(!store) {//无球
 				Intakec(100);
-				ThrowOut(15,hold);
+				ThrowOut(22,hold);
 			} else {//存1球
 				Intakec(100);
-				ThrowOut(15,hold);
+				ThrowOut(22,hold);
 			}
 			
 			
@@ -444,7 +444,7 @@ void drivercontrol(void)
 					Intake(30,-30,-40,-100);
 				} else {
 					block_out = true;
-					Intake(-Ch2 * 0.5,-Ch2 * 0.5,-Ch2 * 0.5,Ch2 * 0.5);
+					Intake(100,100,30,-100);
 				}
 			
 				
