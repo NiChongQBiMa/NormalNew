@@ -59,11 +59,11 @@ void Initializing()
 
 //////////////////分球///////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-bool team = true;//true：红队 false：蓝队
+bool team = false;//true：红队 false：蓝队
 bool seperate = true;//设置是否开启分球
 	//////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////
-int Auton = 3;
+int Auton = 6;
 /// //////////////////////////////
 
 void runauto()
@@ -90,7 +90,7 @@ void runauto()
 		Auto_Redright_0plus7();
 		break;
 	case 6:
-		//Auto_left();//
+		Auto_Blueright_0plus7();
 		break;
 	case 7:
 		//Auto_right();
@@ -295,7 +295,8 @@ void drivercontrol(void)
 
 
 
-
+	HookL.close();
+	HookR.close();
 
 	throw_time = full_throw_time;
 	bool HOOK = false;
@@ -330,7 +331,7 @@ void drivercontrol(void)
 		Ch2 = Controller.Axis2.value();
 		Ch3 = -Controller.Axis3.value();
 		Ch4 = Controller.Axis4.value();
-		L1 = Controller.ButtonL1.pressing();
+		
 		L2 = Controller.ButtonL2.pressing();
 		R1 = Controller.ButtonR1.pressing();
 		R2 = Controller.ButtonR2.pressing();
@@ -442,6 +443,9 @@ void drivercontrol(void)
 				
 				if(throw_time2 < full_throw_time2){
 					Intake(30,-30,-40,-100);
+					if(!Optical.isNearObject()){
+						throw_time2 = full_throw_time2;
+					}
 				} else {
 					block_out = true;
 					Intake(100,100,30,-100);
@@ -507,8 +511,11 @@ void drivercontrol(void)
 		} else if(!TobeSeperate && IsSeperate_Down){
 			Door.close();
 		}
-		
+		L1 = Controller.ButtonL1.pressing();
 	}
+	
+	HookL.close();
+	HookR.close();
 }
 
 int main()
@@ -525,12 +532,12 @@ int main()
 		curR = (RightMotor1.position(deg) + RightMotor2.position(deg) + RightMotor3.position(deg)) / 3;
 		curL = (LeftMotor1.position(deg) + LeftMotor2.position(deg) + LeftMotor3.position(deg)) / 3;
 
-/*
+
 
 		print((curR + curL) / 2,1);
 		print(Inertial.rotation(),2);
 		print(DistanceD.objectDistance(mm),3);
-		*/
+		
 		task::sleep(10);
 	}
 }
